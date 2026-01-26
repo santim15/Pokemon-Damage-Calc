@@ -1,3 +1,5 @@
+from data.type_chart import get_type_multiplier
+
 def calculate_dmg(attacker, defender, move, field=None):
     """
     Docstring para calculate_dmg
@@ -27,7 +29,11 @@ def calculate_dmg(attacker, defender, move, field=None):
     else:
         stab = 1.0
 
-    #Tercero - Cálculo final
-    final_damage = int(base_dmg*stab)
+    #Tercero - Efectividad
+    efectiveness = get_type_multiplier(move.type_, defender.types)
+
+    #Cuarto - Cálculo final
+    multiplier = stab*efectiveness
+    final_damage = int(base_dmg*multiplier)
     
     return final_damage

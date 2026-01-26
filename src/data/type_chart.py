@@ -158,3 +158,15 @@ TYPE_CHART = {
         "Rock": 0.5
     }
 }
+
+def get_type_multiplier(move_type: str, defender_types: list[str]) -> float:
+    multiplier = 1.0
+
+    for defender_type in defender_types:
+
+        # Si el tipo defensor no está definido, asumimos 1.0 (neutro)
+        type_effectiveness = TYPE_CHART[move_type].get(defender_type, 1.0)
+
+        multiplier *= type_effectiveness
+
+    return multiplier
