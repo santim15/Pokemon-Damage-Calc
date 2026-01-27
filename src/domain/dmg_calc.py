@@ -1,3 +1,4 @@
+import math
 from data.type_chart import get_type_multiplier
 
 def calculate_dmg(attacker, defender, move, field=None):
@@ -29,11 +30,18 @@ def calculate_dmg(attacker, defender, move, field=None):
     else:
         stab = 1.0
 
-    #Tercero - Efectividad
+    #Tercero - Multiplicadores
     efectiveness = get_type_multiplier(move.type_, defender.types)
-
-    #Cuarto - Cálculo final
     multiplier = stab*efectiveness
-    final_damage = int(base_dmg*multiplier)
     
-    return final_damage
+    #Cuarto - Cálculo de dmg final    
+    final_damage = int(base_dmg*multiplier)
+
+    #Quinto - Cálculo de rolls
+    rolls = []
+
+    for variation in range(85,101):
+        damage_roll = math.floor(final_damage * variation/100)
+        rolls.append(damage_roll)
+    
+    return rolls
