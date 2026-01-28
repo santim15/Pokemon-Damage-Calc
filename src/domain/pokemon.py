@@ -1,3 +1,4 @@
+from data.natures import NATURES
 class Pokemon:
     
     def __init__(self, name, level, types, base_stats, ivs, evs, nature):
@@ -28,7 +29,18 @@ class Pokemon:
         stats = {}
         # HP, se calcula diferente al resto de stats
         stats["HP"] = int(((2 * self.base_stats["HP"] + self.ivs["HP"] + self.evs["HP"] // 4) * self.level) // 100 + self.level + 10)
+
+        nature_data = NATURES.get(self.nature,None)
         # Otros stats
         for stat in ["Attack", "Defense", "Special Attack", "Special Defense", "Speed"]:
-            stats[stat] = int((((2 * self.base_stats[stat] + self.ivs[stat] + self.evs[stat] // 4) * self.level) // 100 + 5) * self.nature.get(stat, 1))
+            base_value = int(((2 * self.base_stats[stat] + self.ivs[stat] + self.evs[stat] // 4) * self.level) // 100 + 5) 
+            nat_modifier = 1
+            if nature_data:
+                if stat == nature_data["increase"]:
+                    nat_modifier = 1.1
+                elif stat == nature_data["decrease"]:
+                    nat_modifier = 0.9
+
+            stats[stat] = int(base_value * nat_modifier)
+
         return stats

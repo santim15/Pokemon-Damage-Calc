@@ -1,6 +1,7 @@
 import math
 from data.type_chart import get_type_multiplier
 
+
 def calculate_dmg(attacker, defender, move, field=None):
     """
     Docstring para calculate_dmg
