@@ -16,11 +16,11 @@ def calculate_dmg(attacker, defender, move, field=None):
     power = move.power
 
     if move.category == "Physical":
-        Atk_stat = attacker.stats["Attack"]
-        Def_stat = defender.stats["Defense"]
+        Atk_stat = attacker.get_modified_stat("Attack")
+        Def_stat = defender.get_modified_stat("Defense")
     else:
-        Atk_stat = attacker.stats["Special Attack"]
-        Def_stat = defender.stats["Special Defense"]
+        Atk_stat = attacker.get_modified_stat("Special Attack")
+        Def_stat = defender.get_modified_stat("Special Defense")
 
     #Primero - Fórmula básica de daño:
     base_dmg = (((0.2 * level + 1) * power * Atk_stat) / (Def_stat * 25) ) + 2
